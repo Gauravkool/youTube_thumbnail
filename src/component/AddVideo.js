@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./AddVideo.css";
-function AddVideo({ dispatch, editableVideo }) {
+
+import useVideoDispatch from "../hooks/VideoDispatch";
+function AddVideo({ editableVideo }) {
   const initialState = {
     channel: "coder dost",
     time: "1 year ago",
@@ -8,7 +10,9 @@ function AddVideo({ dispatch, editableVideo }) {
     title: "",
     views: "",
   };
+  const dispatch = useVideoDispatch();
   const [video, setVideo] = useState(initialState);
+  const inputRef = useRef(null);
   function handleSubmit(e) {
     e.preventDefault();
     if (editableVideo) {
@@ -24,10 +28,19 @@ function AddVideo({ dispatch, editableVideo }) {
 
   useEffect(() => {
     if (editableVideo) setVideo(editableVideo);
+    // inputRef.current.placeholder = " ";
+    inputRef.current.focus();
+    // "type here".split("").forEach((char, i) => {
+    //   setTimeout(() => {
+    //     inputRef.current.placeholder += char;
+    //   }, 100 * i);
+    // });
   }, [editableVideo]);
+
   return (
     <div>
       <input
+        ref={inputRef}
         type="text"
         name="title"
         placeholder="Title"

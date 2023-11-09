@@ -4,6 +4,9 @@ import { videosDB } from "./data/Datadb";
 import AddVideo from "./component/AddVideo";
 import VideosList from "./component/VideosList";
 import ThemeContext from "./context/ThemeContext";
+import VideosContext from "./context/VideosContext";
+import VideoDisptachContext from "./context/VideoDispatchContext";
+import Counter from "./component/Counter"
 function App() {
   const [editableVideo, setEditableVideo] = useState(null);
   const [mode, setMode] = useState("darkMode");
@@ -34,14 +37,21 @@ function App() {
 
   return (
     <ThemeContext.Provider value={mode}>
-      <button
-        onClick={() => setMode(mode == "darkMode" ? "lightMode" : "darkMode")}>
-        Mode
-      </button>
-      <div className={`App ${mode}`} onClick={() => console.log("app")}>
-        <AddVideo editableVideo={editableVideo} dispatch={dispatch} />
-        <VideosList editVideo={editVideo} dispatch={dispatch} videos={videos} />
-      </div>
+      <VideosContext.Provider value={videos}>
+        <VideoDisptachContext.Provider value={dispatch}>
+          <div className={`App ${mode}`} onClick={() => console.log("app")}>
+            <Counter></Counter>
+            <button
+              onClick={() =>
+                setMode(mode == "darkMode" ? "lightMode" : "darkMode")
+              }>
+              Mode
+            </button>
+            <AddVideo editableVideo={editableVideo} />
+            <VideosList editVideo={editVideo} />
+          </div>
+        </VideoDisptachContext.Provider>
+      </VideosContext.Provider>
     </ThemeContext.Provider>
   );
 }

@@ -1,7 +1,10 @@
 import PlayButton from "./PlayButton";
 import Video from "./Video";
 
-function VideosList({ videos, dispatch, editVideo }) {
+import useVideos from "../hooks/Videos";
+
+function VideosList({ editVideo }) {
+  const videos = useVideos();
   return (
     <>
       {videos.map((video) => (
@@ -13,7 +16,6 @@ function VideosList({ videos, dispatch, editVideo }) {
           views={video.views}
           time={video.time}
           verified={video.verified}
-          dispatch={dispatch}
           editVideo={editVideo}>
           <PlayButton
             onPlay={() => console.log("playing", video.title)}
