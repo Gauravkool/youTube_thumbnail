@@ -6,12 +6,14 @@ import VideosList from "./component/VideosList";
 import ThemeContext from "./context/ThemeContext";
 import VideosContext from "./context/VideosContext";
 import VideoDisptachContext from "./context/VideoDispatchContext";
-import Counter from "./component/Counter"
+import Counter from "./component/Counter";
 function App() {
   const [editableVideo, setEditableVideo] = useState(null);
   const [mode, setMode] = useState("darkMode");
   function videoReducer(videos, action) {
     switch (action.type) {
+      case "LOAD":
+        return action.payload;
       case "ADD":
         return [...videos, { ...action.payload, id: videos.length + 1 }];
       case "DELETE":
@@ -27,7 +29,7 @@ function App() {
     }
   }
 
-  const [videos, dispatch] = useReducer(videoReducer, videosDB);
+  const [videos, dispatch] = useReducer(videoReducer, []);
 
   const themeContext = useContext(ThemeContext);
   console.log(themeContext);
