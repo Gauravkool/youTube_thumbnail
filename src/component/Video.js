@@ -8,7 +8,7 @@ function Video({
   views,
   time,
   children,
-  deleteVideo,
+  dispatch,
   editVideo,
 }) {
   return (
@@ -16,7 +16,7 @@ function Video({
       <div className="container">
         <button
           onClick={() => {
-            deleteVideo(id);
+            dispatch({ type: "DELETE", payload: id });
           }}
           className="close">
           X
