@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import "./AddVideo.css";
 
 import useVideoDispatch from "../hooks/VideoDispatch";
-function AddVideo({ editableVideo }) {
+const AddVideo = forwardRef(function AddVideo({ editableVideo }, ref) {
   const initialState = {
     channel: "coder dost",
     time: "1 year ago",
@@ -12,7 +18,15 @@ function AddVideo({ editableVideo }) {
   };
   const dispatch = useVideoDispatch();
   const [video, setVideo] = useState(initialState);
-  const inputRef = useRef(null);
+  const iRef = useRef(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      jumpTo() {
+        iRef.current.focus();
+      },
+    };
+  });
   function handleSubmit(e) {
     e.preventDefault();
     if (editableVideo) {
@@ -29,7 +43,7 @@ function AddVideo({ editableVideo }) {
   useEffect(() => {
     if (editableVideo) setVideo(editableVideo);
     // inputRef.current.placeholder = " ";
-    inputRef.current.focus();
+    // inputRef.current.focus();
     // "type here".split("").forEach((char, i) => {
     //   setTimeout(() => {
     //     inputRef.current.placeholder += char;
@@ -40,7 +54,7 @@ function AddVideo({ editableVideo }) {
   return (
     <div>
       <input
-        ref={inputRef}
+        ref={iRef}
         type="text"
         name="title"
         placeholder="Title"
@@ -59,5 +73,5 @@ function AddVideo({ editableVideo }) {
       </button>
     </div>
   );
-}
+});
 export default AddVideo;
