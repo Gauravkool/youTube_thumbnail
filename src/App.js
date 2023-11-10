@@ -1,6 +1,5 @@
-import { useContext, useReducer, useState } from "react";
+import { useCallback, useContext, useReducer, useState } from "react";
 import "./App.css";
-import { videosDB } from "./data/Datadb";
 import AddVideo from "./component/AddVideo";
 import VideosList from "./component/VideosList";
 import ThemeContext from "./context/ThemeContext";
@@ -33,9 +32,11 @@ function App() {
 
   const themeContext = useContext(ThemeContext);
   console.log(themeContext);
-  function editVideo(id) {
+
+  const editVideo = useCallback(function editVideo(id) {
     setEditableVideo(videos.find((video) => video.id === id));
-  }
+  },[videos])
+  
 
   return (
     <ThemeContext.Provider value={mode}>
@@ -45,7 +46,7 @@ function App() {
             <Counter></Counter>
             <button
               onClick={() =>
-                setMode(mode == "darkMode" ? "lightMode" : "darkMode")
+                setMode(mode === "darkMode" ? "lightMode" : "darkMode")
               }>
               Mode
             </button>

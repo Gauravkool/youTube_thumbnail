@@ -8,7 +8,7 @@ function AddVideo({ editableVideo }) {
     time: "1 year ago",
     verified: true,
     title: "",
-    views: "",
+    view: "",
   };
   const dispatch = useVideoDispatch();
   const [video, setVideo] = useState(initialState);
@@ -49,9 +49,9 @@ function AddVideo({ editableVideo }) {
       />
       <input
         type="text"
-        name="views"
+        name="view"
         placeholder="Views"
-        value={video.views}
+        value={video.view}
         onChange={handleChange}
       />
       <button onClick={handleSubmit}>

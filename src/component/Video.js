@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import "./Video.css";
 import ThemeContext from "../context/ThemeContext";
 import useVideoDispatch from "../hooks/VideoDispatch";
@@ -8,23 +8,23 @@ function Video({
   id,
   title,
   channel = "coder dost",
-  views,
+  view,
   time,
   children,
   editVideo,
 }) {
   const dispatch = useVideoDispatch();
   const theme = useContext(ThemeContext);
-
+console.log("video render", id);
   // useEffect(() => {
-    // const idx = setInterval(() => {
-      // console.log("video playing", id);
-    // }, 3000);
-    // return () => {
-    //   clearInterval(idx);
-    // };
+  // const idx = setInterval(() => {
+  // console.log("video playing", id);
+  // }, 3000);
+  // return () => {
+  //   clearInterval(idx);
+  // };
   // }, [id]);
-  
+
   return (
     <>
       <div className={`container ${theme}`}>
@@ -49,7 +49,7 @@ function Video({
             {channel} {verified && "✅"}
           </div>
           <div className="views">
-            {views} views <span>.</span>
+            {view} views <span>.</span>
             {time}
           </div>
           <div>{children}</div>
