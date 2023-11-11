@@ -6,7 +6,7 @@ import ThemeContext from "./context/ThemeContext";
 import VideosContext from "./context/VideosContext";
 import VideoDisptachContext from "./context/VideoDispatchContext";
 import Counter from "./component/Counter";
-import { videosDB } from './data/Datadb';
+import { videosDB } from "./data/Datadb";
 function App() {
   const [editableVideo, setEditableVideo] = useState(null);
   const [mode, setMode] = useState("darkMode");
@@ -29,7 +29,7 @@ function App() {
     }
   }
 
-  const [videos, dispatch] = useReducer(videoReducer, []);
+  const [videos, dispatch] = useReducer(videoReducer, videosDB);
   const inpuRef = useRef(null);
   const themeContext = useContext(ThemeContext);
   console.log(themeContext);
