@@ -2,26 +2,15 @@ import PlayButton from "./PlayButton";
 import Video from "./Video";
 import useVideos from "../hooks/Videos";
 // import axios from "axios";
-import {
-  useCallback,
-  useDeferredValue,
-  useMemo,
-  useState,
-  useTransition,
-} from "react";
+import { useCallback, useMemo } from "react";
 import useVideoDispatch from "../hooks/VideoDispatch";
-import moreVideos from "../data/moreData";
+import  moreVideos from "../data/moreData";
+
 
 function VideosList({ editVideo }) {
   // const url = "https://my.api.mockaroo.com/api?key=3b1db0b0";
-  // const videos = useVideos();
+  const videos = useVideos();
   const dispatch = useVideoDispatch();
-  /* use usedefferedValue hook */
-
-  /* use useTransition hook */
-  const [videos, setVideos] = useState([]);
-  const [isPending, startTransition] = useTransition();
-  // const deferredVideos = useDeferredValue(videos);
 
   // async function handleClick() {
   //   const res = await axios.get(url);
@@ -31,10 +20,7 @@ function VideosList({ editVideo }) {
   // console.log(moreVideos, "moreVideos");
   /*  use for moraVideos */
   function getVideos() {
-    // dispatch({ type: "LOAD", payload: moreVideos });
-    startTransition(() => {
-      setVideos(moreVideos);
-    });
+    dispatch({ type: "LOAD", payload: moreVideos });
   }
 
   // useEffect(() => {
@@ -72,9 +58,7 @@ function VideosList({ editVideo }) {
           {memoButton}
         </Video>
       ))}
-      <button onClick={getVideos}>
-        {isPending ? "Getting..." : "Get Videos"}
-      </button>
+      <button onClick={getVideos}>Get Videos</button>
     </>
   );
 }

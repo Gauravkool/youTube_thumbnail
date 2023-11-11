@@ -1,14 +1,18 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import "./Counter.css";
+import { flushSync } from "react-dom";
 function Counter() {
-  const [count, setCount] = useState(20);
+  const [count, setCount] = useState(1);
   const num = useRef(0);
   function handleCount() {
-    setCount((count) => count + 1);
-    setCount((count) => count + 1);
-    setCount((count) => count + 1);
+    flushSync(() => {
+      setCount((count) => count + 1);
+      setCount((count) => count + 1);
+      setCount((count) => count + 1);
+    });
     num.current++;
-    console.log(num.current);
+    console.log(count);
+    // window.print(); // use for flushSync API
   }
 
   const fibFx = useCallback(function fib(n) {

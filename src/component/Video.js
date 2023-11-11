@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect, useRef } from "react";
+import { useContext, useId, useLayoutEffect, useRef } from "react";
 import "./Video.css";
 import ThemeContext from "../context/ThemeContext";
 import useVideoDispatch from "../hooks/VideoDispatch";
@@ -17,6 +17,7 @@ function Video({
   const theme = useContext(ThemeContext);
   console.log("video render", id);
   const ref = useRef(null);
+  const ids = useId(null);
 
   // useLayoutEffect(() => {
   //   const { height } = ref.current.getBoundingClientRect();
@@ -34,7 +35,7 @@ function Video({
 
   return (
     <>
-      <div ref={ref} className={`container ${theme}`}>
+      <div id={ids} ref={ref} className={`container ${theme}`}>
         <button
           onClick={() => {
             dispatch({ type: "DELETE", payload: id });

@@ -1,4 +1,12 @@
-import { useCallback, useContext, useReducer, useRef, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useContext,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
 import AddVideo from "./component/AddVideo";
 import VideosList from "./component/VideosList";
@@ -7,9 +15,12 @@ import VideosContext from "./context/VideosContext";
 import VideoDisptachContext from "./context/VideoDispatchContext";
 import Counter from "./component/Counter";
 import { videosDB } from "./data/Datadb";
+const Dummy = lazy(() => import("./component/Dummy"));
+
 function App() {
   const [editableVideo, setEditableVideo] = useState(null);
   const [mode, setMode] = useState("darkMode");
+  const [show, setShow] = useState(false);
   function videoReducer(videos, action) {
     switch (action.type) {
       case "LOAD":
@@ -46,7 +57,7 @@ function App() {
       <VideosContext.Provider value={videos}>
         <VideoDisptachContext.Provider value={dispatch}>
           <div className={`App ${mode}`} onClick={() => console.log("app")}>
-            {/* <Counter></Counter> */}
+            <Counter></Counter>
             <button onClick={() => inpuRef.current.jumpTo()}>Focus</button>
             <button
               onClick={() =>
@@ -56,6 +67,12 @@ function App() {
             </button>
             <AddVideo ref={inpuRef} editableVideo={editableVideo} />
             <VideosList editVideo={editVideo} />
+            <button onClick={() => setShow(true)}>Show</button>
+            {show ? (
+              <Suspense fallback={<>Loading...</>}>
+                <Dummy />
+              </Suspense>
+            ) : null}
           </div>
         </VideoDisptachContext.Provider>
       </VideosContext.Provider>
